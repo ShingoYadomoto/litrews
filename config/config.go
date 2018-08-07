@@ -7,7 +7,34 @@ import (
 )
 
 type Conf struct {
-	App *App `yaml:"App"`
+	App      *App     `yaml:"App"`
+	Log      *Log     `yaml:"Log"`
+	Database Database `yaml:"Database"`
+}
+
+type App struct {
+	Name   string `yaml:"Name"`
+	Domain string `yaml:"Domain"`
+	Port   int    `yaml:"Port"`
+}
+
+type Log struct {
+	Level log.Lvl `yaml:"Level"`
+}
+
+type Database struct {
+	Name                  string `yaml:"Name"`
+	Dialect               string `yaml:"Dialect"`
+	Role                  string `yaml:"Role"`
+	Addr                  string `yaml:"Addr"`
+	DBName                string `yaml:"DBName"`
+	User                  string `yaml:"User"`
+	Password              string `yaml:"Password"`
+	Net                   string `yaml:"Net"`
+	MaxConnections        int    `yaml:"MaxConnections"`
+	MaxIdleConnections    int    `yaml:"MaxIdleConnections"`
+	ConnectionMaxLifeTime int    `yaml:"ConnectionMaxLifeTime"` // seconds
+	Logging               bool   `yaml:"Logging"`               // true or false
 }
 
 func Load(path string) *Conf {

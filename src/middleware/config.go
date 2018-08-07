@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"github.com/ShingoYadomoto/Litrewssrc/config"
-	"github.com/ShingoYadomoto/Litrewssrc/context"
+	"github.com/ShingoYadomoto/Litrews/src/config"
+	"github.com/ShingoYadomoto/Litrews/src/context"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
