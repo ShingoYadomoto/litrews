@@ -1,0 +1,29 @@
+
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - "data:/var/lib/mysql"
+      - "data:/var/log/mysql"
+      - "./mysql:/etc/mysql/conf.d"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+      - "./mysql/log:/var/log/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      
+  app:
+    image: golang:1.8-onbuild
+    ports:
+      - "8080:8080"
+    volumes:
+      - "../vendor:/go/src/github.com"
+      - "../../submithub_clone_yadomoto:/go/src/app"
+    depends_on:
+      - db
+volumes:
+  data:
+
