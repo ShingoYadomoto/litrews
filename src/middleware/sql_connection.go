@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/ShingoYadomoto/Litrewssrc/context"
+	"github.com/ShingoYadomoto/Litrews/src/context"
 	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"

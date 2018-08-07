@@ -1,7 +1,7 @@
 package context
 
 import (
-	"github.com/ShingoYadomoto/Litrewssrc/config"
+	"github.com/ShingoYadomoto/Litrews/src/config"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
