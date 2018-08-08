@@ -7,10 +7,10 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/ShingoYadomoto/Litrews/src/config"
-	"github.com/ShingoYadomoto/Litrews/src/context"
-	"github.com/ShingoYadomoto/Litrews/src/handler"
-	"github.com/ShingoYadomoto/Litrews/src/middleware"
+	"github.com/ShingoYadomoto/litrews/src/config"
+	"github.com/ShingoYadomoto/litrews/src/context"
+	"github.com/ShingoYadomoto/litrews/src/handler"
+	"github.com/ShingoYadomoto/litrews/src/middleware"
 	"github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo"
@@ -24,7 +24,7 @@ func main() {
 	)
 
 	workingDirPath, _ := os.Getwd()
-	defaultConfigDirPath := workingDirPath + "/../env/config.yml"
+	defaultConfigDirPath := workingDirPath + "/env/config.yml"
 
 	flag.StringVar(&confPath, "conf", defaultConfigDirPath, "config file path")
 	flag.StringVar(&confPath, "c", defaultConfigDirPath, "config file path")
@@ -39,6 +39,7 @@ func main() {
 		Addr:      conf.Database.Addr,
 		DBName:    conf.Database.DBName,
 		ParseTime: true,
+		AllowNativePasswords: true,
 	}
 	dsn := mysqlConf.FormatDSN()
 
@@ -65,7 +66,7 @@ func initEcho(conf *config.Conf, db *sqlx.DB) *echo.Echo {
 	e.Logger.SetLevel(conf.Log.Level)
 	log.SetLevel(conf.Log.Level)
 
-	e.Static("/static", "../resources/assets")
+	e.Static("/static", "/resources/assets")
 
 	e.Use(context.CustomContextMiddleware())
 	e.Use(middleware.ConfigMiddleware(conf))
@@ -74,7 +75,7 @@ func initEcho(conf *config.Conf, db *sqlx.DB) *echo.Echo {
 	e.Use(echo_middleware.Recover())
 
 	e.Renderer = &Template{
-		templates: template.Must(template.ParseGlob("../resources/views/**/*.html")),
+		templates: template.Must(template.ParseGlob("resources/views/**/*.html")),
 	}
 
 	return e

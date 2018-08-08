@@ -1,7 +1,7 @@
 package context
 
 import (
-	"github.com/ShingoYadomoto/Litrews/src/config"
+	"github.com/ShingoYadomoto/litrews/src/config"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
@@ -21,6 +21,7 @@ type CustomContext struct {
 
 const (
 	ConfigKey = "__CONFIG__"
+	DatabasesKey = "__DATABASES__"
 )
 
 func (c *CustomContext) GetConfig() *config.Conf {
