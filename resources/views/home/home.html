@@ -1,3 +1,17 @@
 {{define "home"}}
-    Hello World!!
+    Hello World!!<br><br>
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>タイトル</td>
+            <td>詳細</td>
+        </tr>
+        {{range .genres}}
+            <tr>
+                <td>{{.ID}}</td>
+                <td>{{.Title}}</td>
+                <td>{{.Description}}</td>
+            </tr>
+        {{end}}
+    </table>
 {{end}}
