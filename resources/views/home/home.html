@@ -1,5 +1,6 @@
 {{define "home"}}
     Hello World!!<br><br>
+    <hr>
     <table>
         <tr>
             <td>ID</td>
@@ -11,6 +12,41 @@
                 <td>{{.ID}}</td>
                 <td>{{.Title}}</td>
                 <td>{{.Description}}</td>
+            </tr>
+        {{end}}
+    </table>
+    <hr>
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>記事種別</td>
+            <td>ジャンルID</td>
+            <td>関連記事APIエンドポイント</td>
+            <td>タイトル</td>
+            <td>本文</td>
+            <td>記事作成日時</td>
+            <td>ソースドメイン</td>
+            <td>ソースサイト名</td>
+            <td>記事URL</td>
+            <td>画像URL</td>
+            <td>画像幅(px)</td>
+            <td>画像高さ(px)</td>
+        </tr>
+        {{range .articles}}
+            <tr>
+                <td>{{.ID}}</td>
+                <td>{{.ContentType}}</td>
+                <td>{{.GenreID}}</td>
+                <td>{{.RelatedArticleDataEPoint}}</td>
+                <td>{{.Data.Title}}</td>
+                <td>{{.Data.Body}}</td>
+                <td>{{.Data.CreateTime}}</td>
+                <td>{{.Data.SrcDomain}}</td>
+                <td>{{.Data.SrcName}}</td>
+                <td>{{.Data.SrcURL}}</td>
+                <td>{{.Data.ImageURL}}</td>
+                <td>{{.Data.ImageSize.Width}}</td>
+                <td>{{.Data.ImageSize.Height}}</td>
             </tr>
         {{end}}
     </table>
