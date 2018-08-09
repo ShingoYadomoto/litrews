@@ -16,3 +16,7 @@ Database:
   MaxIdleConnections: 5
   ConnectionMaxLifeTime: 180
   Logging: true
+DocomoApi:
+  Key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  BaseEndPoint: "https://example.com"
+  CommonParams: "&lang=ja"
