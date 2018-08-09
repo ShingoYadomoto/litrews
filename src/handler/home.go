@@ -21,7 +21,15 @@ func Home(c echo.Context) (err error) {
 		return c.Render(http.StatusOK, "error", err)
 	}
 
+	favGenre := genres[0]
+	articles, err := dapi.GetArticles(favGenre.ID, 10)
+	if err != nil {
+		log.Error(err)
+		return c.Render(http.StatusOK, "error", err)
+	}
+
 	return c.Render(http.StatusOK, "home", map[string]interface{}{
-		"genres": genres,
+		"genres":   genres,
+		"articles": articles,
 	})
 }
