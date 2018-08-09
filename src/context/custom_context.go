@@ -20,7 +20,7 @@ type CustomContext struct {
 }
 
 const (
-	ConfigKey = "__CONFIG__"
+	ConfigKey    = "__CONFIG__"
 	DatabasesKey = "__DATABASES__"
 )
 

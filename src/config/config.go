@@ -1,15 +1,17 @@
 package config
 
 import (
-	"github.com/labstack/gommon/log"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
+
+	"github.com/labstack/gommon/log"
+	yaml "gopkg.in/yaml.v2"
 )
 
 type Conf struct {
-	App      *App     `yaml:"App"`
-	Log      *Log     `yaml:"Log"`
-	Database Database `yaml:"Database"`
+	App       *App      `yaml:"App"`
+	Log       *Log      `yaml:"Log"`
+	Database  Database  `yaml:"Database"`
+	DocomoApi DocomoApi `yaml:"DocomoApi"`
 }
 
 type App struct {
@@ -35,6 +37,12 @@ type Database struct {
 	MaxIdleConnections    int    `yaml:"MaxIdleConnections"`
 	ConnectionMaxLifeTime int    `yaml:"ConnectionMaxLifeTime"` // seconds
 	Logging               bool   `yaml:"Logging"`               // true or false
+}
+
+type DocomoApi struct {
+	Key          string `yaml:"Key"`
+	BaseEndPoint string `yaml:"BaseEndPoint"`
+	CommonParams string `yaml:"CommonParams"`
 }
 
 func Load(path string) *Conf {
