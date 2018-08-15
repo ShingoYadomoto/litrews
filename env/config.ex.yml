@@ -20,3 +20,6 @@ DocomoApi:
   Key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   BaseEndPoint: "https://example.com"
   CommonParams: "&lang=ja"
+Rss2JsonApi:
+  Key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  BaseEndPoint: "https://example.com"

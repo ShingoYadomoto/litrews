@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    font-family: 'Arial Rounded MT Bold', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック',YuGothic,'Yu Gothic','メイリオ', Meiryo,'ＭＳ Ｐゴシック','MS PGothic'
+}
+
+main {
+    margin: 0 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #FF00BF;
+}
+
+h1 {
+    margin: 0;
+}
+
+.mainHeader {
+    background-color: #0080FF;
+}
+
+.mainHeader__title {
+    padding: 20px;
+}
+
+.mainHeader__title a {
+    color: white;
+}

@@ -1,9 +1,6 @@
 package api
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"net/http"
 	"strconv"
 
 	"github.com/ShingoYadomoto/litrews/src/config"
@@ -25,14 +22,14 @@ type Genre struct {
 }
 
 type ArticleData struct {
-	Total        int       `json:"totalResults"`
-	StartIndex   int       `json:"startIndex"`
-	CountPerPage int       `json:"itemsPerPage"`
-	SetTime      string    `json:"issueDate"` // ToDo: time.Time的な型にしたい
-	Articles     []Article `json:"articleContents"`
+	Total        int        `json:"totalResults"`
+	StartIndex   int        `json:"startIndex"`
+	CountPerPage int        `json:"itemsPerPage"`
+	SetTime      string     `json:"issueDate"` // ToDo: time.Time的な型にしたい
+	Articles     []DArticle `json:"articleContents"`
 }
 
-type Article struct {
+type DArticle struct {
 	ID                       int    `json:"contentId"`
 	ContentType              int    `json:"contentType"`
 	GenreID                  int    `json:"genreId"`
@@ -58,21 +55,7 @@ func (da *DocomoApi) getEndPoint(kind string, params string) (ep string) {
 }
 
 func (da *DocomoApi) SetEncodedDataFromEndPoint(i interface{}, ep string) (err error) {
-	// URLを叩いてデータを取得
-	resp, err := http.Get(ep)
-	if err != nil {
-		return
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return
-	}
-	// 取得したデータをJSONデコード
-	err = json.Unmarshal(body, i)
-	if err != nil {
-		return
-	}
+	err = setEncodedDataFromEndPoint(i, ep)
 	return
 }
 
@@ -88,7 +71,7 @@ func (da *DocomoApi) GetAllGenres() ([]Genre, error) {
 	return data.Genres, err
 }
 
-func (da *DocomoApi) GetArticles(genreID int, count int) ([]Article, error) {
+func (da *DocomoApi) GetArticles(genreID int, count int) ([]DArticle, error) {
 	data := new(ArticleData)
 
 	queryParams := "&genreId=" + strconv.Itoa(genreID) + "&n=" + strconv.Itoa(count)
