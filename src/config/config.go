@@ -8,10 +8,11 @@ import (
 )
 
 type Conf struct {
-	App       *App      `yaml:"App"`
-	Log       *Log      `yaml:"Log"`
-	Database  Database  `yaml:"Database"`
-	DocomoApi DocomoApi `yaml:"DocomoApi"`
+	App         *App        `yaml:"App"`
+	Log         *Log        `yaml:"Log"`
+	Database    Database    `yaml:"Database"`
+	DocomoApi   DocomoApi   `yaml:"DocomoApi"`
+	Rss2JsonApi Rss2JsonApi `yaml:"Rss2JsonApi"`
 }
 
 type App struct {
@@ -43,6 +44,11 @@ type DocomoApi struct {
 	Key          string `yaml:"Key"`
 	BaseEndPoint string `yaml:"BaseEndPoint"`
 	CommonParams string `yaml:"CommonParams"`
+}
+
+type Rss2JsonApi struct {
+	Key          string `yaml:"Key"`
+	BaseEndPoint string `yaml:"BaseEndPoint"`
 }
 
 func Load(path string) *Conf {

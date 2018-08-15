@@ -33,12 +33,12 @@ func main() {
 	conf := config.Load(confPath)
 
 	mysqlConf := mysql.Config{
-		User:      conf.Database.User,
-		Passwd:    conf.Database.Password,
-		Net:       conf.Database.Net,
-		Addr:      conf.Database.Addr,
-		DBName:    conf.Database.DBName,
-		ParseTime: true,
+		User:                 conf.Database.User,
+		Passwd:               conf.Database.Password,
+		Net:                  conf.Database.Net,
+		Addr:                 conf.Database.Addr,
+		DBName:               conf.Database.DBName,
+		ParseTime:            true,
 		AllowNativePasswords: true,
 	}
 	dsn := mysqlConf.FormatDSN()
@@ -53,6 +53,8 @@ func main() {
 	e.Debug = true
 
 	e.GET("/", handler.Home)
+	e.GET("/docomo", handler.Docomo)
+	e.GET("/google_news/:topic", handler.GoogleNews)
 
 	// Start server
 	address := ":" + strconv.Itoa(conf.App.Port)
@@ -66,7 +68,7 @@ func initEcho(conf *config.Conf, db *sqlx.DB) *echo.Echo {
 	e.Logger.SetLevel(conf.Log.Level)
 	log.SetLevel(conf.Log.Level)
 
-	e.Static("/static", "/resources/assets")
+	e.Static("/static", "resources/assets")
 
 	e.Use(context.CustomContextMiddleware())
 	e.Use(middleware.ConfigMiddleware(conf))
