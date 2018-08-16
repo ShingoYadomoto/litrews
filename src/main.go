@@ -63,6 +63,7 @@ func main() {
 	e.POST("/signout", handler.Signout)
 	e.GET("/docomo", handler.Docomo)
 	e.GET("/google_news/:topic", handler.GoogleNews)
+	e.GET("/notification", handler.Notification)
 
 	// Start server
 	address := ":" + strconv.Itoa(conf.App.Port)

@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  branch = "master"
+  digest = "1:e4d349fbdc0b306ebde61556f0370b4b08e73e2fa4c28a3baabe90408e105468"
+  name = "github.com/bamzi/jobrunner"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "273175f8b6ebabab8a639a4e6260a5c50fbf016a"
+
+[[projects]]
   digest = "1:76dc72490af7174349349838f2fe118996381b31ea83243812a97e5a0fd5ed55"
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
@@ -181,6 +189,14 @@
   version = "v1.1.0"
 
 [[projects]]
+  branch = "v2"
+  digest = "1:e8c48aa61ea272e211858e52979ad4d114c60bfe6900d12431ac697482100b0a"
+  name = "gopkg.in/robfig/cron.v2"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "be2e0b0deed5a68ffee390b4583a13aff8321535"
+
+[[projects]]
   digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
@@ -192,6 +208,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/bamzi/jobrunner",
     "github.com/go-playground/validator",
     "github.com/go-sql-driver/mysql",
     "github.com/gorilla/sessions",

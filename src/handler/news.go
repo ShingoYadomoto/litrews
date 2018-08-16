@@ -4,12 +4,13 @@ import (
 	"html/template"
 	"net/http"
 	"net/url"
-
 	"strconv"
 
 	"github.com/ShingoYadomoto/litrews/src/api"
 	"github.com/ShingoYadomoto/litrews/src/context"
+	"github.com/ShingoYadomoto/litrews/src/job"
 	"github.com/ShingoYadomoto/litrews/src/model"
+	"github.com/bamzi/jobrunner"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
@@ -49,5 +50,30 @@ func GoogleNews(c echo.Context) (err error) {
 
 	return c.Render(http.StatusOK, "googleNews", map[string]interface{}{
 		"articlesData": articlesData,
+	})
+}
+
+func Notification(c echo.Context) (err error) {
+	cc := c.(*context.CustomContext)
+	db := cc.GetDB()
+
+	topicModel := model.NewTopicModel(db)
+
+	topics, err := topicModel.GetAllTopics()
+	if err != nil {
+		log.Error(err)
+		return c.Render(http.StatusOK, "error", err)
+	}
+
+	newsLink := map[string]string{}
+	for _, topic := range topics {
+		newsLink[topic.NameJa] = "/google_news/" + strconv.Itoa((topic.ID))
+	}
+
+	jobrunner.Start() // optional: jobrunner.Start(pool int, concurrent int) (10, 1)
+	jobrunner.Schedule("@every 5s", job.ReminderEmails{})
+
+	return c.Render(http.StatusOK, "home", map[string]interface{}{
+		"newsLink": newsLink,
 	})
 }
