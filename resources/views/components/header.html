@@ -4,4 +4,11 @@
             <a class="noDecorateText" href="/">Litrews</a>
         </h1>
     </header>
+    {{range .flashes}}
+    <hr><div class="text-center">{{.}}</div><hr>
+    {{end}}
+
+    {{range .errors}}
+    <hr><div class="text-center">{{.}}</div><hr>
+    {{end}}
 {{end}}
