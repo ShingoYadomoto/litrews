@@ -10,14 +10,13 @@ import (
 )
 
 type User struct {
-	ID         int       `db:"id" json:"id" form:"id"`
-	Name       string    `db:"name" json:"name" form:"name"`
-	Password   string    `db:"password" json:"password" form:"password"`
-	Email      string    `db:"email" json:"email" form:"email"`
-	CreateTime time.Time `db:"create_time" json:"create_time"`
-	UpdateTime time.Time `db:"update_time" json:"update_time"`
-	DeleteFlg  bool      `db:"delete_flg" json:"delete_flg"`
-	Topics     []*Topic  `db:"-"`
+	ID        int       `db:"id" json:"id" form:"id"`
+	Name      string    `db:"name" json:"name" form:"name"`
+	Password  string    `db:"password" json:"password" form:"password"`
+	Email     string    `db:"email" json:"email" form:"email"`
+	CreatedAt time.Time `db:"created_at" json:"create_at"`
+	UpdatedAt time.Time `db:"updated_at" json:"update_at"`
+	Topics    []*Topic  `db:"-"`
 }
 
 type UserModel struct {
@@ -34,27 +33,9 @@ func (m *UserModel) GetUserByID(id int) (user *User, err error) {
 	user = new(User)
 
 	q := `SELECT
-            user.*,
-            p.id "user_profile.id",
-            p.display_name "user_profile.display_name",
-            p.create_time "user_profile.create_time",
-            p.update_time "user_profile.update_time",
-            IFNULL(a.id, 0) "user_avatar.id",
-            IFNULL(a.file_name, "") "user_avatar.file_name",
-            IFNULL(a.width, 0) "user_avatar.width",
-            IFNULL(a.height, 0) "user_avatar.height",
-            IFNULL(a.create_time, CAST('1111-11-11 11:11:11' AS DATE)) "user_avatar.create_time",
-            IFNULL(a.update_time, CAST('1111-11-11 11:11:11' AS DATE)) "user_avatar.update_time"
+            user.*
           FROM
             user
-          INNER JOIN
-            user_profile AS p
-          ON
-            user.id = p.user_id
-          LEFT JOIN
-            user_avatar AS a
-          ON
-            user.id = a.user_id
           WHERE
             user.id = ?`
 	err = m.db.Get(user, q, id)
@@ -64,8 +45,8 @@ func (m *UserModel) GetUserByID(id int) (user *User, err error) {
 	}
 
 	// ManyToMany, HasMany のリレーションはjoinとは別で取ってくるのが良さそう
-	//roleModel := NewRoleModel(m.db)
-	//user.Roles, err = roleModel.GetRolesByUserID(id)
+	topicModel := NewTopicModel(m.db)
+	user.Topics, err = topicModel.GetTopicsByUserID(id)
 
 	return
 }

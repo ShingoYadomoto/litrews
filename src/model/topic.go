@@ -10,18 +10,18 @@ import (
 )
 
 type Topic struct {
-	ID         int       `db:"id" json:"id" form:"id"`
-	Name       string    `db:"name" json:"name" form:"name"`
-	NameJa     string    `db:"name_ja" json:"name_ja" form:"name_ja"`
-	CreateTime time.Time `db:"create_time" json:"create_time"`
-	UpdateTime time.Time `db:"update_time" json:"update_time"`
+	ID        int       `db:"id" json:"id" form:"id"`
+	Name      string    `db:"name" json:"name" form:"name"`
+	NameJa    string    `db:"name_ja" json:"name_ja" form:"name_ja"`
+	CreatedAt time.Time `db:"create_at" json:"create_at"`
+	UpdatedAt time.Time `db:"update_at" json:"update_at"`
 }
 
 type TopicModel struct {
 	db db.AbstractDB
 }
 
-func NewRoleModel(db db.AbstractDB) *TopicModel {
+func NewTopicModel(db db.AbstractDB) *TopicModel {
 	return &TopicModel{
 		db: db,
 	}

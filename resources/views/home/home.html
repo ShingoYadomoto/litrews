@@ -7,5 +7,35 @@
             </li>
         </ul>
     {{end}}
+
+    <div>
+        <h2>サインイン</h2>
+        <form action="/signin" method="POST">
+            ユーザー名:             <input type="text" name="name" placeholder="ユーザー名">
+            もしくは メールアドレス:  <input type="email" name="email" placeholder="メールアドレス"><br>
+            パスワード:             <input type="password" name="password" placeholder="パスワード"><br>
+            <input type="submit" value="サインイン">
+        </form>
+
+        <hr>
+
+        <h2>サインアップ</h2>
+        <form action="/signup" method="POST">
+            ユーザー名:     <input type="text" name="name" placeholder="ユーザー名"><br>
+            メールアドレス:  <input type="email" name="email" placeholder="メールアドレス"><br>
+            パスワード:     <input type="password" name="password" placeholder="パスワード"><br>
+            <input type="submit" value="サインアップ">
+        </form>
+
+        <hr>
+
+        <h2>サインアウト</h2>
+        <form action="/signout" method="POST">
+            <input type="submit" value="サインアウト">
+        </form>
+        <hr>
+
+        <a href="/user" class="normalBtn">ユーザーページ</a>
+    </div>
 {{template "foot" .}}
 {{end}}

@@ -19,7 +19,7 @@ func GoogleNews(c echo.Context) (err error) {
 	conf := cc.GetConfig()
 	db := cc.GetDB()
 
-	topicModel := model.NewRoleModel(db)
+	topicModel := model.NewTopicModel(db)
 
 	topicID, err := strconv.Atoi(c.Param("topic"))
 	if err != nil {
@@ -49,30 +49,5 @@ func GoogleNews(c echo.Context) (err error) {
 
 	return c.Render(http.StatusOK, "googleNews", map[string]interface{}{
 		"articlesData": articlesData,
-	})
-}
-
-func Docomo(c echo.Context) (err error) {
-	cc := c.(*context.CustomContext)
-	conf := cc.GetConfig()
-
-	dapi := api.DocomoApi{conf.DocomoApi}
-
-	genres, err := dapi.GetAllGenres()
-	if err != nil {
-		log.Error(err)
-		return c.Render(http.StatusOK, "error", err)
-	}
-
-	favGenre := genres[0]
-	articles, err := dapi.GetArticles(favGenre.ID, 10)
-	if err != nil {
-		log.Error(err)
-		return c.Render(http.StatusOK, "error", err)
-	}
-
-	return c.Render(http.StatusOK, "docomo", map[string]interface{}{
-		"genres":   genres,
-		"articles": articles,
 	})
 }

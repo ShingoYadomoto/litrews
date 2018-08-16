@@ -15,7 +15,7 @@ func Home(c echo.Context) (err error) {
 	cc := c.(*context.CustomContext)
 	db := cc.GetDB()
 
-	topicModel := model.NewRoleModel(db)
+	topicModel := model.NewTopicModel(db)
 
 	topics, err := topicModel.GetAllTopics()
 	if err != nil {

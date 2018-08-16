@@ -11,9 +11,12 @@ import (
 	"github.com/ShingoYadomoto/litrews/src/context"
 	"github.com/ShingoYadomoto/litrews/src/handler"
 	"github.com/ShingoYadomoto/litrews/src/middleware"
+	cvalidator "github.com/ShingoYadomoto/litrews/src/validator"
 	"github.com/go-sql-driver/mysql"
+	"github.com/gorilla/sessions"
 	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo-contrib/session"
 	echo_middleware "github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 )
@@ -53,6 +56,11 @@ func main() {
 	e.Debug = true
 
 	e.GET("/", handler.Home)
+	e.GET("/user", handler.ShowUser)
+	e.POST("/user", handler.UpdateUser)
+	e.POST("/signin", handler.Signin)
+	e.POST("/signup", handler.Signup)
+	e.POST("/signout", handler.Signout)
 	e.GET("/docomo", handler.Docomo)
 	e.GET("/google_news/:topic", handler.GoogleNews)
 
@@ -75,6 +83,10 @@ func initEcho(conf *config.Conf, db *sqlx.DB) *echo.Echo {
 	e.Use(middleware.SqlDBMiddleware(db))
 	e.Use(echo_middleware.Logger())
 	e.Use(echo_middleware.Recover())
+
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte(conf.App.Name))))
+
+	e.Validator = cvalidator.New()
 
 	e.Renderer = &Template{
 		templates: template.Must(template.ParseGlob("resources/views/**/*.html")),
