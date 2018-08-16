@@ -31,3 +31,9 @@ h1 {
 .text-center {
     text-align: center;
 }
+
+.input__normal {
+    padding: 12px 6px;
+    border-radius: 8px;
+    width: 200px;
+}

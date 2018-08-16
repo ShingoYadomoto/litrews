@@ -7,6 +7,7 @@ import (
 	cdb "github.com/ShingoYadomoto/litrews/src/db"
 	"github.com/ShingoYadomoto/litrews/src/helper"
 	"github.com/ShingoYadomoto/litrews/src/model"
+	"github.com/ShingoYadomoto/litrews/src/request"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
@@ -101,7 +102,7 @@ func UpdateUser(c echo.Context) (err error) {
 	// ↑
 
 	err = db.Transaction(func(sc cdb.SchemaContext) (err error) {
-		roleModel := model.NewTopicModel(sc.DB())
+		topicModel := model.NewTopicModel(sc.DB())
 
 		// userテーブルの更新
 		err = userModel.UpdateUser(newUser)
@@ -111,16 +112,16 @@ func UpdateUser(c echo.Context) (err error) {
 
 		// users_topicsテーブルの更新
 		if len(oldUser.Topics) == 0 {
-			err = roleModel.CreateUserTopicsByUser(newUser)
+			err = topicModel.CreateUserTopicsByUser(newUser)
 			if err != nil {
 				return
 			}
 		} else {
-			err = roleModel.DeleteUserTopicByUserID(userID)
+			err = topicModel.DeleteUserTopicByUserID(userID)
 			if err != nil {
 				return
 			}
-			err = roleModel.CreateUserTopicsByUser(newUser)
+			err = topicModel.CreateUserTopicsByUser(newUser)
 			if err != nil {
 				return
 			}

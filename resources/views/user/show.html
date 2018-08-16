@@ -3,9 +3,9 @@
     <div>
         <form action="/user" method="POST">
             <div>
-                ユーザ名:<input type="text" value="{{.user.Name}}" name="name"><br>
-                メールアドレス:<input type="email" value="{{.user.Email}}" name="email"><br>
-                お気に入りトピック:
+                ユーザ名：<input class="input__normal" type="text" value="{{.user.Name}}" name="name"><br>
+                メールアドレス：<input class="input__normal" type="email" value="{{.user.Email}}" name="email"><br>
+                お気に入りトピック：
                 <div>
                 {{range $topic := .topics}}
                     <label><input type="checkbox" name="topic_ids[]" value="{{$topic.ID}}" {{if index $.isCheckedTopicMap $topic.ID}}checked{{end}}>{{$topic.Name}}</label>
