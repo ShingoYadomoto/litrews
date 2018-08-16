@@ -1,7 +1,7 @@
 {{define "home"}}
 {{template "head" .}}
     {{range $topic, $link := .newsLink}}
-        <ul type="1">
+        <ul>
             <li>
                 <a href="{{$link}}">{{$topic}}</a>
             </li>

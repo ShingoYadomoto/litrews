@@ -1,6 +1,6 @@
 {{define "googleNews"}}
 {{template "head" .}}
-    <h1>{{.articlesData.Title}}</h1>
+    <h1>{{.articlesData.Title}} - {{.articlesData.Count}}件</h1>
     {{range .articlesData.Articles}}
         <div>
             <h2>{{.Title}}</h2>

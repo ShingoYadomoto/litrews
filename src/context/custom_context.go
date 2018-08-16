@@ -2,6 +2,9 @@ package context
 
 import (
 	"github.com/ShingoYadomoto/litrews/src/config"
+	cdb "github.com/ShingoYadomoto/litrews/src/db"
+
+	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
@@ -30,4 +33,13 @@ func (c *CustomContext) GetConfig() *config.Conf {
 		log.Panic("*config.Conf assertion error")
 	}
 	return conf
+}
+
+func (c *CustomContext) GetDB() cdb.AbstractDB {
+	db, ok := c.Get(DatabasesKey).(*sqlx.DB)
+	if !ok {
+		log.Panic("sql.Conn assertion error")
+	}
+
+	return cdb.NewSchemaContext(db).DB()
 }

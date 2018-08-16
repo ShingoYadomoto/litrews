@@ -3,17 +3,9 @@ package api
 import (
 	"html/template"
 	"strings"
-)
 
-var GoogleNewsTopic = map[string]string{
-	"nation":        "日本",
-	"world":         "国際",
-	"business":      "ビジネス",
-	"politics":      "政治",
-	"entertainment": "エンタメ",
-	"sports":        "スポーツ",
-	"sciTech":       "科学&テクノロジー",
-}
+	"github.com/ShingoYadomoto/litrews/src/model"
+)
 
 type RssData struct {
 	RssURL      string    `json:"rss"`
@@ -40,10 +32,10 @@ type Article struct {
 }
 
 // "https://news.google.com/news/rss/headlines/section/topic/{TOPIC}.ja_jp/{トピック}?ned=jp&hl=ja&gl=JP" 形式のgoogleNews rssエンドポイントを返す
-func GetGoogleNewsEndPoint(topic string) (endPoint string) {
+func GetGoogleNewsEndPointByTopic(topic *model.Topic) (endPoint string) {
 	endPoint = "https://news.google.com/news/rss/headlines/section/topic/"
 	params := "?ned=jp&hl=ja&gl=JP"
-	endPoint += strings.ToUpper(topic) + ".ja_jp/" + GoogleNewsTopic[topic] + params
+	endPoint += strings.ToUpper(topic.Name) + ".ja_jp/" + topic.NameJa + params
 
 	return
 }
