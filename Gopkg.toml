@@ -52,3 +52,9 @@
 [[constraint]]
   branch = "master"
   name = "github.com/bamzi/jobrunner"
+
+[metadata.heroku]
+  root-package = "github.com/ShingoYadomoto/litrews"
+  go-version = "go1.10.3"
+  install = [ ".", "./cmd/..." ]
+  ensure = "true"
