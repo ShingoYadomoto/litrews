@@ -56,5 +56,5 @@
 [metadata.heroku]
   root-package = "github.com/ShingoYadomoto/litrews"
   go-version = "go1.10.3"
-  install = [ ".", "./cmd/..." ]
+  install = [ "./src/..." ]
   ensure = "true"
