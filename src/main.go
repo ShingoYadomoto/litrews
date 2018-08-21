@@ -3,6 +3,9 @@ package main
 import (
 	"html/template"
 	"io"
+
+	"os"
+
 	"strconv"
 
 	"github.com/ShingoYadomoto/litrews/src/config"
@@ -25,7 +28,11 @@ func main() {
 	e.GET("/", handler.Home)
 
 	// Start server
-	address := ":" + strconv.Itoa(conf.App.Port)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = strconv.Itoa(conf.App.Port)
+	}
+	address := ":" + port
 	e.Logger.Fatal(e.Start(address))
 }
 
