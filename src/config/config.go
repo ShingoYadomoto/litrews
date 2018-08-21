@@ -1,71 +1,51 @@
 package config
 
 import (
-	"io/ioutil"
-
+	"github.com/joho/godotenv"
+	"github.com/kelseyhightower/envconfig"
 	"github.com/labstack/gommon/log"
-	yaml "gopkg.in/yaml.v2"
+	"github.com/pkg/errors"
 )
 
 type Conf struct {
-	App         *App        `yaml:"App"`
-	Log         *Log        `yaml:"Log"`
-	Database    Database    `yaml:"Database"`
-	DocomoApi   DocomoApi   `yaml:"DocomoApi"`
-	Rss2JsonApi Rss2JsonApi `yaml:"Rss2JsonApi"`
-	LineApi     LineApi     `yaml:"LineApi"`
+	App         *App         `envconfig:"app"`
+	Log         *Log         `envconfig:"log"`
+	Rss2JsonApi *Rss2JsonApi `envconfig:"rss2jsonapi"`
+	LineApi     *LineApi     `envconfig:"lineapi"`
 }
 
 type App struct {
-	Name   string `yaml:"Name"`
-	Domain string `yaml:"Domain"`
-	Port   int    `yaml:"Port"`
+	Name   string
+	Domain string
+	Port   int
 }
 
 type Log struct {
-	Level log.Lvl `yaml:"Level"`
-}
-
-type Database struct {
-	Name                  string `yaml:"Name"`
-	Dialect               string `yaml:"Dialect"`
-	Role                  string `yaml:"Role"`
-	Addr                  string `yaml:"Addr"`
-	DBName                string `yaml:"DBName"`
-	User                  string `yaml:"User"`
-	Password              string `yaml:"Password"`
-	Net                   string `yaml:"Net"`
-	MaxConnections        int    `yaml:"MaxConnections"`
-	MaxIdleConnections    int    `yaml:"MaxIdleConnections"`
-	ConnectionMaxLifeTime int    `yaml:"ConnectionMaxLifeTime"` // seconds
-	Logging               bool   `yaml:"Logging"`               // true or false
-}
-
-type DocomoApi struct {
-	Key          string `yaml:"Key"`
-	BaseEndPoint string `yaml:"BaseEndPoint"`
-	CommonParams string `yaml:"CommonParams"`
+	Level log.Lvl
 }
 
 type Rss2JsonApi struct {
-	Key          string `yaml:"Key"`
-	BaseEndPoint string `yaml:"BaseEndPoint"`
+	Key          string
+	BaseEndPoint string
 }
 
 type LineApi struct {
-	ChannelSecret      string `yaml:"ChannelSecret"`
-	ChannelAccessToken string `yaml:"ChannelAccessToken"`
+	ChannelSecret      string
+	ChannelAccessToken string
 }
 
-func Load(path string) *Conf {
-	buf, err := ioutil.ReadFile(path)
+func GetConfig() (conf Conf) {
+	err := godotenv.Load()
 	if err != nil {
-		log.Panic(err)
+		err = errors.Wrap(err, "Error loading .env file")
+		log.Error(err)
 	}
-	var conf Conf
-	err = yaml.Unmarshal(buf, &conf)
+
+	err = envconfig.Process("litrews", &conf)
 	if err != nil {
-		log.Panic(err)
+		err = errors.Wrap(err, "Error mapping .env file")
+		log.Error(err)
 	}
-	return &conf
+
+	return
 }

@@ -1,76 +1,35 @@
 package main
 
 import (
-	"flag"
 	"html/template"
 	"io"
-	"os"
 	"strconv"
 
 	"github.com/ShingoYadomoto/litrews/src/config"
 	"github.com/ShingoYadomoto/litrews/src/context"
 	"github.com/ShingoYadomoto/litrews/src/handler"
 	"github.com/ShingoYadomoto/litrews/src/middleware"
-	cvalidator "github.com/ShingoYadomoto/litrews/src/validator"
-	"github.com/go-sql-driver/mysql"
-	"github.com/gorilla/sessions"
-	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo-contrib/session"
 	echo_middleware "github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 )
 
 func main() {
-	var (
-		confPath string
-	)
 
-	workingDirPath, _ := os.Getwd()
-	defaultConfigDirPath := workingDirPath + "/env/config.yml"
+	conf := config.GetConfig()
 
-	flag.StringVar(&confPath, "conf", defaultConfigDirPath, "config file path")
-	flag.StringVar(&confPath, "c", defaultConfigDirPath, "config file path")
-	flag.Parse()
-
-	conf := config.Load(confPath)
-
-	mysqlConf := mysql.Config{
-		User:                 conf.Database.User,
-		Passwd:               conf.Database.Password,
-		Net:                  conf.Database.Net,
-		Addr:                 conf.Database.Addr,
-		DBName:               conf.Database.DBName,
-		ParseTime:            true,
-		AllowNativePasswords: true,
-	}
-	dsn := mysqlConf.FormatDSN()
-
-	db, err := sqlx.Connect("mysql", dsn)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	e := initEcho(conf, db)
+	e := initEcho(&conf)
 
 	e.Debug = true
 
 	e.GET("/", handler.Home)
-	e.GET("/user", handler.ShowUser)
-	e.POST("/user", handler.UpdateUser)
-	e.POST("/signin", handler.Signin)
-	e.POST("/signup", handler.Signup)
-	e.POST("/signout", handler.Signout)
-	e.GET("/docomo", handler.Docomo)
-	e.GET("/google_news/:topic", handler.GoogleNews)
-	e.GET("/notification", handler.Notification)
 
 	// Start server
 	address := ":" + strconv.Itoa(conf.App.Port)
 	e.Logger.Fatal(e.Start(address))
 }
 
-func initEcho(conf *config.Conf, db *sqlx.DB) *echo.Echo {
+func initEcho(conf *config.Conf) *echo.Echo {
 	// Setup
 	e := echo.New()
 
@@ -81,13 +40,8 @@ func initEcho(conf *config.Conf, db *sqlx.DB) *echo.Echo {
 
 	e.Use(context.CustomContextMiddleware())
 	e.Use(middleware.ConfigMiddleware(conf))
-	e.Use(middleware.SqlDBMiddleware(db))
 	e.Use(echo_middleware.Logger())
 	e.Use(echo_middleware.Recover())
-
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte(conf.App.Name))))
-
-	e.Validator = cvalidator.New()
 
 	e.Renderer = &Template{
 		templates: template.Must(template.ParseGlob("resources/views/**/*.html")),

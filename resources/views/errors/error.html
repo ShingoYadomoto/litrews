@@ -1,11 +1,21 @@
 {{define "error"}}
-{{template "head" .}}
-    <div class="text-center">
-        <h1>エラーが発生しました。</h1>
-        <a class="noDecorateText" href="/">
-            <h2>ホームへ</h2>
-        </a>
-        {{.}}
-    </div>
-{{template "foot" .}}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        {{/*<link rel="stylesheet" type="text/css" href="/static/css/reset.css">*/}}
+        <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    </head>
+    <body>
+        <main>
+            <div class="text-center">
+                <h1>エラーが発生しました。</h1>
+                <a class="noDecorateText" href="/">
+                    <h2>ホームへ</h2>
+                </a>
+                {{.}}
+            </div>
+        </main>
+    </body>
+</html>
 {{end}}

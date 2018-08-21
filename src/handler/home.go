@@ -3,32 +3,35 @@ package handler
 import (
 	"net/http"
 
-	"strconv"
+	"html/template"
+	"net/url"
 
+	"github.com/ShingoYadomoto/litrews/src/api"
 	"github.com/ShingoYadomoto/litrews/src/context"
-	"github.com/ShingoYadomoto/litrews/src/model"
 	"github.com/labstack/echo"
-	"github.com/labstack/gommon/log"
 )
 
 func Home(c echo.Context) (err error) {
 	cc := c.(*context.CustomContext)
-	db := cc.GetDB()
+	conf := cc.GetConfig()
 
-	topicModel := model.NewTopicModel(db)
+	topics := api.GetTopics()
 
-	topics, err := topicModel.GetAllTopics()
-	if err != nil {
-		log.Error(err)
-		return c.Render(http.StatusOK, "error", err)
-	}
+	googleNewsEndPoint := api.GetGoogleNewsEndPointByTopic(&topics[0])
+	encodedGoogleNewsEndPoint := url.QueryEscape(googleNewsEndPoint)
 
-	newsLink := map[string]string{}
-	for _, topic := range topics {
-		newsLink[topic.NameJa] = "/google_news/" + strconv.Itoa((topic.ID))
+	articlesData := new(api.RssData)
+
+	rss2JsonApi := api.Rss2JsonApi{conf.Rss2JsonApi}
+	rss2JsonEndPoint := rss2JsonApi.GetEndPoint(encodedGoogleNewsEndPoint)
+
+	rss2JsonApi.SetEncodedDataFromEndPoint(articlesData, rss2JsonEndPoint)
+
+	for i, article := range articlesData.Articles {
+		articlesData.Articles[i].Body = template.HTML(article.Description)
 	}
 
 	return c.Render(http.StatusOK, "home", map[string]interface{}{
-		"newsLink": newsLink,
+		"articlesData": articlesData,
 	})
 }

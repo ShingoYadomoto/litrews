@@ -5,7 +5,7 @@ import (
 )
 
 type Rss2JsonApi struct {
-	config.Rss2JsonApi
+	*config.Rss2JsonApi
 }
 
 // rssのエンドポイントを渡すと、RSS2JsonAPIのエンドポイントを返す

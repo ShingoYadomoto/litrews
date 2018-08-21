@@ -15,3 +15,4 @@ vendor/*
 docker/mysql/log/*
 env/config.yml
 .idea/*
+.env

@@ -3,8 +3,6 @@ package api
 import (
 	"html/template"
 	"strings"
-
-	"github.com/ShingoYadomoto/litrews/src/model"
 )
 
 type RssData struct {
@@ -31,8 +29,27 @@ type Article struct {
 	Body        template.HTML
 }
 
+type Topic struct {
+	ID     int
+	Name   string
+	NameJa string
+}
+
+func GetTopics() (topics []Topic) {
+	topics = []Topic{
+		Topic{1, "nation", "日本"},
+		Topic{2, "world", "国際"},
+		Topic{3, "business", "ビジネス"},
+		Topic{4, "politics", "政治"},
+		Topic{5, "entertainment", "エンタメ"},
+		Topic{6, "sports", "スポーツ"},
+		Topic{7, "sciTech", "科学&テクノロジー"},
+	}
+	return
+}
+
 // "https://news.google.com/news/rss/headlines/section/topic/{TOPIC}.ja_jp/{トピック}?ned=jp&hl=ja&gl=JP" 形式のgoogleNews rssエンドポイントを返す
-func GetGoogleNewsEndPointByTopic(topic *model.Topic) (endPoint string) {
+func GetGoogleNewsEndPointByTopic(topic *Topic) (endPoint string) {
 	endPoint = "https://news.google.com/news/rss/headlines/section/topic/"
 	params := "?ned=jp&hl=ja&gl=JP"
 	endPoint += strings.ToUpper(topic.Name) + ".ja_jp/" + topic.NameJa + params

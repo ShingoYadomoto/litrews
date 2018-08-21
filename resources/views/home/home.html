@@ -1,41 +1,27 @@
 {{define "home"}}
-{{template "head" .}}
-    {{range $topic, $link := .newsLink}}
-        <ul>
-            <li>
-                <a href="{{$link}}">{{$topic}}</a>
-            </li>
-        </ul>
-    {{end}}
-
-    <div>
-        <h2>サインイン</h2>
-        <form action="/signin" method="POST">
-            ユーザー名：             <input class="input__normal" type="text" name="name" placeholder="ユーザー名">
-            もしくは メールアドレス：  <input class="input__normal" type="email" name="email" placeholder="メールアドレス"><br>
-            パスワード：             <input class="input__normal" type="password" name="password" placeholder="パスワード"><br>
-            <input type="submit" value="サインイン">
-        </form>
-
-        <hr>
-
-        <h2>サインアップ</h2>
-        <form action="/signup" method="POST">
-            ユーザー名：     <input class="input__normal" type="text" name="name" placeholder="ユーザー名"><br>
-            メールアドレス：  <input class="input__normal" type="email" name="email" placeholder="メールアドレス"><br>
-            パスワード：     <input class="input__normal" type="password" name="password" placeholder="パスワード"><br>
-            <input type="submit" value="サインアップ">
-        </form>
-
-        <hr>
-
-        <h2>サインアウト</h2>
-        <form action="/signout" method="POST">
-            <input type="submit" value="サインアウト">
-        </form>
-        <hr>
-
-        <a href="/user" class="normalBtn">ユーザーページ</a>
-    </div>
-{{template "foot" .}}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        {{/*<link rel="stylesheet" type="text/css" href="/static/css/reset.css">*/}}
+        <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    </head>
+    <body>
+        <main>
+            <header class="mainHeader">
+                <h1 class="mainHeader__title">
+                    <a class="noDecorateText" href="/">Litrews</a>
+                </h1>
+            </header>
+            <h1>{{.articlesData.Title}} - {{.articlesData.Count}}件</h1>
+            {{range .articlesData.Articles}}
+                <div>
+                    <h2>{{.Title}}</h2>
+                    <div>{{.Body}}</div>
+                </div>
+                <hr>
+            {{end}}
+        </main>
+    </body>
+</html>
 {{end}}
