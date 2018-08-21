@@ -23,3 +23,6 @@ DocomoApi:
 Rss2JsonApi:
   Key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   BaseEndPoint: "https://example.com"
+LineApi:
+  ChannelSecret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ChannelAccessToken: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"

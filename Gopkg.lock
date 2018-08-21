@@ -120,6 +120,14 @@
   version = "0.2.6"
 
 [[projects]]
+  digest = "1:6e2470f8698872c20b887e3114f1ce3576cd61ca2d0a3d654db9bdfb0fedb832"
+  name = "github.com/line/line-bot-sdk-go"
+  packages = ["linebot"]
+  pruneopts = "UT"
+  revision = "2bb2ee426892d0f0efe6ee399ae2d969fe3ca39f"
+  version = "3.0.0"
+
+[[projects]]
   digest = "1:c658e84ad3916da105a761660dcaeb01e63416c8ec7bc62256a9b411a05fcd67"
   name = "github.com/mattn/go-colorable"
   packages = ["."]
@@ -217,9 +225,16 @@
     "github.com/labstack/echo-contrib/session",
     "github.com/labstack/echo/middleware",
     "github.com/labstack/gommon/log",
+    "github.com/line/line-bot-sdk-go/linebot",
     "github.com/pkg/errors",
     "golang.org/x/crypto/bcrypt",
     "gopkg.in/yaml.v2",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
+
+[metadata.heroku]
+  root-package = "github.com/ShingoYadomoto/litrews"
+  go-version = "go1.10.3"
+  install = [ ".", "./cmd/..." ]
+  ensure = "true"

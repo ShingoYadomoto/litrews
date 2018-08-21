@@ -13,6 +13,7 @@ type Conf struct {
 	Database    Database    `yaml:"Database"`
 	DocomoApi   DocomoApi   `yaml:"DocomoApi"`
 	Rss2JsonApi Rss2JsonApi `yaml:"Rss2JsonApi"`
+	LineApi     LineApi     `yaml:"LineApi"`
 }
 
 type App struct {
@@ -49,6 +50,11 @@ type DocomoApi struct {
 type Rss2JsonApi struct {
 	Key          string `yaml:"Key"`
 	BaseEndPoint string `yaml:"BaseEndPoint"`
+}
+
+type LineApi struct {
+	ChannelSecret      string `yaml:"ChannelSecret"`
+	ChannelAccessToken string `yaml:"ChannelAccessToken"`
 }
 
 func Load(path string) *Conf {
