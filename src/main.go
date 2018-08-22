@@ -3,10 +3,7 @@ package main
 import (
 	"html/template"
 	"io"
-
 	"os"
-
-	"strconv"
 
 	"github.com/ShingoYadomoto/litrews/src/config"
 	"github.com/ShingoYadomoto/litrews/src/context"
@@ -28,11 +25,7 @@ func main() {
 	e.GET("/", handler.Home)
 
 	// Start server
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = strconv.Itoa(conf.App.Port)
-	}
-	address := ":" + port
+	address := ":" + os.Getenv("PORT")
 	e.Logger.Fatal(e.Start(address))
 }
 
@@ -51,7 +44,7 @@ func initEcho(conf *config.Conf) *echo.Echo {
 	e.Use(echo_middleware.Recover())
 
 	e.Renderer = &Template{
-		templates: template.Must(template.ParseGlob("resources/views/**/*.html")),
+		templates: template.Must(template.ParseGlob(conf.ViewDir + "/*.html")),
 	}
 
 	return e

@@ -12,12 +12,12 @@ type Conf struct {
 	Log         *Log         `envconfig:"log"`
 	Rss2JsonApi *Rss2JsonApi `envconfig:"rss2jsonapi"`
 	LineApi     *LineApi     `envconfig:"lineapi"`
+	ViewDir     string
 }
 
 type App struct {
 	Name   string
 	Domain string
-	Port   int
 }
 
 type Log struct {
