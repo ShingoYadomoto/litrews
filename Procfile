@@ -1,1 +1,1 @@
-web: litrews
+web: src
