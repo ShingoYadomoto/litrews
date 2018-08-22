@@ -1,17 +1,9 @@
 {{define "news"}}
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        {{/*<link rel="stylesheet" type="text/css" href="/static/css/reset.css">*/}}
-        <link rel="stylesheet" type="text/css" href="/static/css/common.css">
-    </head>
+    {{template "head"}}
     <body>
-        <header class="mainHeader">
-            <h1 class="mainHeader__title">
-                <a class="noDecorateText" href="/">Litrews</a>
-            </h1>
-        </header>
+        {{template "bodyHeader"}}
         <main>
             <h1>{{.articlesData.Title}} - {{.articlesData.Count}}件</h1>
             {{range .articlesData.Articles}}

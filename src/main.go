@@ -45,7 +45,7 @@ func initEcho(conf *config.Conf) *echo.Echo {
 	e.Use(echo_middleware.Recover())
 
 	e.Renderer = &Template{
-		templates: template.Must(template.ParseGlob(conf.ViewDir + "/*.html")),
+		templates: template.Must(template.ParseGlob(conf.ViewDir + "/**/*.html")),
 	}
 
 	return e
