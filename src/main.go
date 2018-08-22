@@ -23,6 +23,7 @@ func main() {
 	e.Debug = true
 
 	e.GET("/", handler.Home)
+	e.GET("/news/:topicID", handler.News)
 
 	// Start server
 	address := ":" + os.Getenv("PORT")

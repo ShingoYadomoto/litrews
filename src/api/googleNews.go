@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"html/template"
 	"strings"
 )
@@ -35,7 +36,7 @@ type Topic struct {
 	NameJa string
 }
 
-func GetTopics() (topics []Topic) {
+func GetAllTopics() (topics []Topic) {
 	topics = []Topic{
 		Topic{1, "nation", "日本"},
 		Topic{2, "world", "国際"},
@@ -44,6 +45,19 @@ func GetTopics() (topics []Topic) {
 		Topic{5, "entertainment", "エンタメ"},
 		Topic{6, "sports", "スポーツ"},
 		Topic{7, "sciTech", "科学&テクノロジー"},
+	}
+	return
+}
+
+func GetTopicByID(id int) (topic Topic, err error) {
+	topics := GetAllTopics()
+	for _, v := range topics {
+		if v.ID == id {
+			topic = v
+		}
+	}
+	if topic.ID == 0 {
+		err = errors.New("指定されたトピックは存在しません。")
 	}
 	return
 }
