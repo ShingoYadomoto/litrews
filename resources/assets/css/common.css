@@ -38,3 +38,8 @@ h1 {
     width: 200px;
     margin-bottom: 10px;
 }
+
+.standout-container {
+    text-align: center;
+    margin: 40px;
+}
