@@ -12,6 +12,7 @@ type Conf struct {
 	Log         *Log         `envconfig:"log"`
 	Rss2JsonApi *Rss2JsonApi `envconfig:"rss2jsonapi"`
 	LineApi     *LineApi     `envconfig:"lineapi"`
+	GoogleApi   *GoogleApi   `envconfig:"googleapi"`
 	ViewDir     string
 }
 
@@ -32,6 +33,10 @@ type Rss2JsonApi struct {
 type LineApi struct {
 	ChannelSecret      string
 	ChannelAccessToken string
+}
+
+type GoogleApi struct {
+	AnalyticsID string
 }
 
 func GetConfig() (conf Conf) {
