@@ -19,6 +19,7 @@ type Conf struct {
 type App struct {
 	Name   string
 	Domain string
+	URL    string
 }
 
 type Log struct {
