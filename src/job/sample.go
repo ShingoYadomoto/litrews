@@ -1,6 +1,8 @@
 package job
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type ReminderEmails struct {
 }

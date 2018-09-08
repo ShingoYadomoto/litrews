@@ -24,6 +24,7 @@ func main() {
 
 	e.GET("/", handler.Home)
 	e.GET("/news/:topicID", handler.News)
+	e.GET("/jobrunner/json", handler.Jobjson)
 
 	// Start server
 	address := ":" + os.Getenv("PORT")
