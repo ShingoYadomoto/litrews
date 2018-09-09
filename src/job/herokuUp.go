@@ -13,7 +13,7 @@ type Curl struct {
 
 func HerokuUp(url string) {
 	jobrunner.Start()
-	jobrunner.Schedule("@every 3s", Curl{url})
+	jobrunner.Schedule("@every 25m", Curl{url})
 }
 
 func (e Curl) Run() {
