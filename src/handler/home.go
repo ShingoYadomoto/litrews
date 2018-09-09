@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+
 	"time"
 
 	"github.com/ShingoYadomoto/litrews/src/api"
@@ -12,11 +13,8 @@ import (
 )
 
 func Home(c echo.Context) (err error) {
-	conf := c.(*context.CustomContext).GetConfig()
 
 	topics := api.GetAllTopics()
-	jobrunner.Start()
-	jobrunner.In(25*time.Minute, job.Curl{conf.App.URL})
 
 	return c.Render(http.StatusOK, "home", map[string]interface{}{
 		"topics": topics,
@@ -24,5 +22,10 @@ func Home(c echo.Context) (err error) {
 }
 
 func Jobjson(c echo.Context) (err error) {
+	conf := c.(*context.CustomContext).GetConfig()
+
+	jobrunner.Start()
+	jobrunner.In(25*time.Minute, job.Curl{conf.App.URL})
+
 	return c.JSON(200, jobrunner.StatusJson())
 }
