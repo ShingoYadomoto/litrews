@@ -8,6 +8,7 @@ import (
 	"github.com/ShingoYadomoto/litrews/src/config"
 	"github.com/ShingoYadomoto/litrews/src/context"
 	"github.com/ShingoYadomoto/litrews/src/handler"
+	"github.com/ShingoYadomoto/litrews/src/job"
 	"github.com/ShingoYadomoto/litrews/src/middleware"
 	"github.com/labstack/echo"
 	echo_middleware "github.com/labstack/echo/middleware"
@@ -25,6 +26,8 @@ func main() {
 	e.GET("/", handler.Home)
 	e.GET("/news/:topicID", handler.News)
 	e.GET("/jobrunner/json", handler.Jobjson)
+
+	job.HerokuUp(conf.App.URL)
 
 	// Start server
 	address := ":" + os.Getenv("PORT")
