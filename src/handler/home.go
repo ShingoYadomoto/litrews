@@ -16,7 +16,7 @@ func Home(c echo.Context) (err error) {
 
 	topics := api.GetAllTopics()
 	jobrunner.Start()
-	jobrunner.In(2*time.Second, job.Curl{conf.App.URL})
+	jobrunner.In(25*time.Minute, job.Curl{conf.App.URL})
 
 	return c.Render(http.StatusOK, "home", map[string]interface{}{
 		"topics": topics,
